@@ -6,7 +6,8 @@ from util import TriangleBuilder
 
 class Main(object):
 
-    def message(self, content):
+    @staticmethod
+    def message(content):
         logging.info(content)
 
     def get_element_recursively(self, i, j):
