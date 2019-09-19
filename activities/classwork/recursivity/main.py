@@ -10,7 +10,8 @@ class Main(object):
         logging.info(content)
 
     def get_element_recursively(self, i, j):
-        pass
+        return 1 if () else 1
+
 
     def pascal_triangle_a(self, level, index=0):
         pass
@@ -25,3 +26,4 @@ class Main(object):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     fire.Fire(Main)
+
