@@ -14,7 +14,7 @@ def pretty_print(logger, serializer_function=lambda obj: obj.__dict__):
                 formatted_output = json.dumps(serializable_obj, indent=4, default=serializer_function)
                 print(formatted_output)
             except TypeError as e:
-                logger.error("Type error encounter with message {". format(e))
+                logger.error("Type error encounter with message {}". format(e))
                 raise
         return wrapper
     return decorator
