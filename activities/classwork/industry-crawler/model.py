@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
+
 class AbstractIndustry(object):
 
     def __init__(self, title, children):
@@ -41,30 +42,37 @@ class MajorGroup(AbstractIndustry):
 
     @staticmethod
     def from_url(url):
-        response= requests.get(url)
+        response = requests.get(url)
         html = BeautifulSoup(response.text, "html.parser")
-        return MajorGroup(title = [elm.text for elm in html.find_all("h2") if elm.text.lower().startswith("major group")][0],
-                          children=[
-                              Group(
-                                  title=None,
-                                  children=[
-                                      Single(
-                                          title=inner.product.text,
-                                          children=[]
-                                      )
-                                      for inner in html.find_all("a")
-                                      if inner.attrs.get("href", "").startswith("sic_manual")
-                                      and inner.parent.attrs.get("text", "").startswith(group.attrs.get("text", "").split(":")[0].split(" ")[-1])
-                                  ]
-                              )
-                              for group in html.find_all("strong") if group.text.lower().startswith("industry group")
-                          ])
+        return MajorGroup(
+            title=[
+                elm.text for elm in html.find_all("h2") if elm.text.lower().startswith("major group")
+            ][0],
+            children=[
+                Group(
+                    title=group.text,
+                    children=[
+                        Single(
+                            title=inner.parent.text,
+                            children=[]
+                        )
+                        for inner in html.find_all("a")
+                        if inner.attrs.get("href", "").startswith("sic_manual")
+                        and inner.parent.text.startswith(group.text.split(":")[0].split(" ")[-1])
+                    ]
+                )
+                for group in html.find_all("strong") if group.text.lower().startswith("industry group")
+            ]
+        )
+
 
 class Group(AbstractIndustry):
     level = "SIC Group"
 
+
 class Single(AbstractIndustry):
     level = "SIC Industry"
+
 
 class SIC(AbstractIndustry):
     level = "Standard Industry Classification"
