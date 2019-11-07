@@ -26,6 +26,13 @@
 
 -- A) Count the number of courses per department
 
+SELECT
+    count(department)
+FROM
+    course
+    
+;
+
 -- B) How many male/female students were accepted?
 
 -- C) How many students were accepted per course?
@@ -33,4 +40,17 @@
 -- D) What's the average age and gpa per course?
 
 -- E) Get the average number of years the enrolled (approved) female student will study.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
