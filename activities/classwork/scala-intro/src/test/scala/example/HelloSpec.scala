@@ -1,9 +1,16 @@
-package example
+package example.a.model
 
-import org.scalatest._
+case class Timestamp(seconds: Int){
+  def +(other: Timestamp): Timestamp =  //puedo sustituir add por +
+  Timestamp(seconds + other.seconds)
+}
 
-class HelloSpec extends FlatSpec with Matchers {
-  "The Hello object" should "say hello" in {
-    Hello.greeting().toLowerCase() shouldEqual "hello, world!"
-  }
+
+object Timestamp { //metodos estaticos
+  val secondsInHour: Int = 60 * 60
+  val secondsInMinutes: Int = 60
+
+  def apply(hours: Int, minutes: Int, seconds: Int): Timestamp =
+    Timestamp(seconds = secondsInHour * hours + secondsInMinutes * minutes + seconds)
+
 }
